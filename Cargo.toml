@@ -1,0 +1,21 @@
+[package]
+name = "pc-rs"
+version = "0.1.0"
+edition = "2021"
+authors = ["Mat Wood <thepacketgeek@users.noreply.github.com>"]
+description = "CLI utility for printing a column from tabular input"
+categories = ["command-line-interface"]
+keywords = ["stdin"]
+license = "MIT OR Apache-2.0"
+documentation = "https://docs.rs/pc-rs"
+readme = "README.md"
+repository = "https://github.com/thepacketgeek/pc-rs"
+
+[dependencies]
+anyhow = "1.0.75"
+clap = { version = "4.4.8", features = ["derive"] }
+regex = "1.10.2"
+
+[[bin]]
+name = "pc"
+path = "src/main.rs"
