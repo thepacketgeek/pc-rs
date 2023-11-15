@@ -1,8 +1,8 @@
-use regex::Regex;
-use std::io::{self, BufRead};
+use std::io;
 use std::path::PathBuf;
 
 use clap::Parser;
+use pc_rs::parse_columns;
 
 /// `col` is a tool to print a specific column from tabular output,
 /// e.g. `ls -l | awk '{ print $2 }' -> `ls -l | col 2`
@@ -32,7 +32,7 @@ fn main() -> anyhow::Result<()> {
 }
 
 fn print_columns(args: &Args) -> anyhow::Result<()> {
-    let input: Box<dyn io::BufRead + 'static> = if let Some(path) = &args.input {
+    let source: Box<dyn io::BufRead + 'static> = if let Some(path) = &args.input {
         match std::fs::File::open(path) {
             Ok(file) => Box::new(io::BufReader::new(file)),
             Err(err) => {
@@ -42,21 +42,8 @@ fn print_columns(args: &Args) -> anyhow::Result<()> {
     } else {
         Box::new(io::BufReader::new(io::stdin()))
     };
-
-    let delimiter_re = Regex::new(&format!("{}+", args.delimiter))?;
-    for line in io::BufReader::new(input).lines() {
-        let line = line?;
-        match args.column {
-            0 => print!("{line}{}", args.separator),
-            c => {
-                let col = delimiter_re
-                    .split(&line)
-                    .nth(c - 1)
-                    .ok_or_else(|| anyhow::anyhow!("Column overflow"))?;
-                print!("{col}{}", &args.separator);
-            }
-        }
-    }
-
+    parse_columns(source, args.column, &args.delimiter, |col| {
+        print!("{col}{}", args.separator)
+    })?;
     Ok(())
 }
