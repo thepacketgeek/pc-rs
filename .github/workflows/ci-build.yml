@@ -1,0 +1,40 @@
+name: ci-build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  clap_maybe_stdin:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cargo/bin/
+          ~/.cargo/registry/index/
+          ~/.cargo/registry/cache/
+          ~/.cargo/git/db/
+          target/
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+    - name: lint
+      run: cargo fmt --message-format human -- --check
+    - name: clippy
+      run: cargo clippy -- -D warnings
+    - name: build
+      run: cargo build --bins --verbose
+    - name: test
+      env:
+        RUST_LOG: info
+      run: cargo test
+    - name: document
+      env:
+        RUSTDOCFLAGS: "-Dwarnings"
+      run: cargo doc
