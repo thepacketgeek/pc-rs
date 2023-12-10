@@ -1,6 +1,6 @@
 [package]
 name = "pc-rs"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2021"
 authors = ["Mat Wood <thepacketgeek@users.noreply.github.com>"]
 description = "CLI utility for printing a column from tabular input"
@@ -14,6 +14,7 @@ repository = "https://github.com/thepacketgeek/pc-rs"
 [dependencies]
 anyhow = "1.0.75"
 clap = { version = "4.4.8", features = ["derive"] }
+clap-stdin = { version = "0.3.0" }
 regex = "1.10.2"
 
 [[bin]]

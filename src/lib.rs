@@ -1,4 +1,4 @@
-use std::io::BufRead;
+use std::io::{BufRead, Read};
 
 use regex::Regex;
 
@@ -31,13 +31,14 @@ use regex::Regex;
 /// # Ok(())
 /// # }
 /// ```
-pub fn parse_columns<'a, 'b, F>(
-    input: Box<dyn BufRead + 'a>,
+pub fn parse_columns<'a, 'b, T, F>(
+    input: T,
     column: usize,
     delimiter: &'b str,
     mut f: F,
 ) -> anyhow::Result<()>
 where
+    T: BufRead + Read,
     F: FnMut(&str),
 {
     let delimiter_re = Regex::new(&format!("{delimiter}+"))?;
