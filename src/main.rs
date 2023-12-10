@@ -1,11 +1,11 @@
 use std::io;
 
 use clap::Parser;
-use pc_rs::parse_columns;
 use clap_stdin::FileOrStdin;
+use pc_rs::parse_columns;
 
-/// `col` is a tool to print a specific column from tabular output,
-/// e.g. `ls -l | awk '{ print $2 }' -> `ls -l | col 2`
+/// `pc` is a tool to print a specific column from tabular output,
+/// e.g. `ls -l | awk '{ print $2 }' -> `ls -l | pc 2`
 #[derive(Debug, Parser)]
 #[command(author, version, about, long_about = None)]
 struct Args {

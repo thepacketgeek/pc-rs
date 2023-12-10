@@ -31,12 +31,7 @@ use regex::Regex;
 /// # Ok(())
 /// # }
 /// ```
-pub fn parse_columns<'a, 'b, T, F>(
-    input: T,
-    column: usize,
-    delimiter: &'b str,
-    mut f: F,
-) -> anyhow::Result<()>
+pub fn parse_columns<T, F>(input: T, column: usize, delimiter: &str, mut f: F) -> anyhow::Result<()>
 where
     T: BufRead + Read,
     F: FnMut(&str),
