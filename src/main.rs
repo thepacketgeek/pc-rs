@@ -26,14 +26,14 @@ struct Args {
 
 fn main() -> anyhow::Result<()> {
     let args = Args::parse();
-    if let Err(err) = print_columns(&args) {
+    if let Err(err) = print_columns(args) {
         eprintln!("ERROR: {err:#}");
     }
     Ok(())
 }
 
-fn print_columns(args: &Args) -> anyhow::Result<()> {
-    let source = io::BufReader::new(args.input.clone().into_reader()?);
+fn print_columns(args: Args) -> anyhow::Result<()> {
+    let source = io::BufReader::new(args.input.into_reader()?);
     parse_columns(source, args.column, &args.delimiter, |col| {
         print!("{col}{}", args.separator)
     })?;

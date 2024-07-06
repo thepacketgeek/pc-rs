@@ -77,9 +77,9 @@ dependencies = [
 
 [[package]]
 name = "clap-stdin"
-version = "0.3.0"
+version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1b2273396940ab439c58cd300e1e93a07768fce6e7a578f24089aab40b3a9d00"
+checksum = "26aebacacd89c47b46d417017046e359921a2914e56b3abdb9caefac048405b1"
 dependencies = [
  "thiserror",
 ]
