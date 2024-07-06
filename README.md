@@ -37,7 +37,7 @@ $ echo "1,2,3,4" | pc 2 --delimiter ,
 The default output separator is a newline:
 
 ```
-$ echo "1 2 3 4\na b c d" | c r -q -- 2
+$ echo "1 2 3 4\na b c d" | pc 2
 2
 b
 ```
@@ -45,7 +45,7 @@ b
 but you can provide a different character to print between each matching column:
 
 ```
-$ echo "1 2 3 4\na b c d" | c r -q -- 2 --separator "|"
+$ echo "1 2 3 4\na b c d" | pc 2 --separator "|"
 2|b|%
 ```
 
